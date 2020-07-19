@@ -46,6 +46,8 @@ namespace LoveBoard
 
         public static void SetKey(string C, Color Color)
         {
+            if (C == " ") { C = "SPACE"; }
+
             keyboardNames k;
             if (Enum.TryParse(C, out k))
             {
@@ -79,5 +81,6 @@ namespace LoveBoard
         public static Color Green = new Color(0, 255, 0);
         public static Color Blue = new Color(0, 0, 255);
         public static Color Black = new Color(0, 0, 0);
+        public static Color White = new Color(255, 255, 255);
     }
 }

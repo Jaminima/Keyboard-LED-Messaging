@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Xml.Schema;
 using LedCSharp;
 
 namespace LoveBoard
 {
     class Program
     {
+        public static Random rnd = new Random();
+
         static void Main(string[] args)
         {
-            Random rnd = new Random();
 
             KeyControl.Start(0,0,0);
 
@@ -35,13 +37,43 @@ namespace LoveBoard
             //    KeyControl.Clear(0, 0, 0);
             //}
 
-            foreach (char C in "Hello There".ToUpper())
-            {
-                KeyControl.Clear(0, 0, 0);
-                Thread.Sleep(50);
-                KeyControl.SetKey(C.ToString(), Color.Blue);
-                Thread.Sleep(500);
-            }
+            //char prev='c';
+            //foreach (char C in "Hello There".ToUpper())
+            //{
+            //    KeyControl.Clear(0, 0, 0);
+            //    Thread.Sleep(50);
+
+            //    if (prev!='c') KeyControl.SetKey(prev.ToString(), new Color(255, 125, 125));
+            //    KeyControl.SetKey(C.ToString(), Color.Red);
+            //    prev = C;
+
+            //    Thread.Sleep(500);
+            //}
+
+            Effects.ShowText(@"What memories have been,
+Now keep the heart warm,
+Holds you in happiness,
+When the worlds out of form.
+
+The success in the past,
+Gives us the strength to raise the mast,
+To set a course,
+To fill our sails without ghast.
+
+Our love in our time,
+Fills our heart with desire devine,
+Pushes us to make a world finer than wine,
+To bathe in a bond that'll face all of time.
+
+Dreams of what can be,
+Strengths the bond between you and me,
+Builds a world to desire,
+One where our souls are on fire.
+
+The day that it will be,
+Is not far along the bend,
+To times inseperable, 
+In a perfect lovey dovey blend");
 
             Console.ReadLine();
 
