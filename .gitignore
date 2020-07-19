@@ -1,0 +1,9 @@
+.vs/
+obj/
+Debug/
+Build/
+Release/
+Bin/
+packages/
+.idea/
+*.jpg
