@@ -12,7 +12,7 @@ namespace LoveBoard
     {
         public static keyboardNames[,] KeyGrid = new keyboardNames[,]
         {
-            { keyboardNames.ESC, keyboardNames.F1, keyboardNames.F1,keyboardNames.F2,keyboardNames.F3,keyboardNames.F4, 00, keyboardNames.F5, keyboardNames.F6, keyboardNames.F7, keyboardNames.F8, 00, keyboardNames.F9, keyboardNames.F10, keyboardNames.F11, keyboardNames.F11, keyboardNames.F12, keyboardNames.PRINT_SCREEN, keyboardNames.SCROLL_LOCK, keyboardNames.PAUSE_BREAK, 00   },
+            { keyboardNames.ESC, keyboardNames.F1, keyboardNames.F1,keyboardNames.F2,keyboardNames.F3,keyboardNames.F4, keyboardNames.F5, keyboardNames.F6, keyboardNames.F7, keyboardNames.F8, 00, keyboardNames.F9, keyboardNames.F10, keyboardNames.F11,  keyboardNames.F12, keyboardNames.PRINT_SCREEN, keyboardNames.SCROLL_LOCK, keyboardNames.PAUSE_BREAK, 00, 00, 00  },
             { keyboardNames.TILDE, keyboardNames.ONE, keyboardNames.TWO, keyboardNames.THREE, keyboardNames.FOUR, keyboardNames.FIVE, keyboardNames.SIX, keyboardNames.SEVEN, keyboardNames.EIGHT, keyboardNames.NINE, keyboardNames.ZERO, keyboardNames.MINUS, keyboardNames.EQUALS, keyboardNames.BACKSPACE, keyboardNames.INSERT, keyboardNames.HOME, keyboardNames.PAGE_UP, keyboardNames.NUM_LOCK, keyboardNames.NUM_SLASH, keyboardNames.NUM_ASTERISK, keyboardNames.NUM_MINUS },
             { keyboardNames.TAB, keyboardNames.Q, keyboardNames.W, keyboardNames.E, keyboardNames.R, keyboardNames.T, keyboardNames.Y, keyboardNames.U, keyboardNames.I, keyboardNames.O, keyboardNames.P, keyboardNames.OPEN_BRACKET, keyboardNames.CLOSE_BRACKET, keyboardNames.ENTER, keyboardNames.KEYBOARD_DELETE, keyboardNames.END, keyboardNames.PAGE_DOWN, keyboardNames.NUM_SEVEN, keyboardNames.NUM_EIGHT, keyboardNames.NUM_NINE, keyboardNames.NUM_PLUS },
             { keyboardNames.CAPS_LOCK, keyboardNames.A, keyboardNames.S, keyboardNames.D, keyboardNames.F, keyboardNames.G, keyboardNames.H, keyboardNames.J, keyboardNames.K, keyboardNames.L, keyboardNames.SEMICOLON, keyboardNames.APOSTROPHE, (keyboardNames)93, keyboardNames.ENTER, 00, 00, 00, keyboardNames.NUM_FOUR, keyboardNames.NUM_FIVE, keyboardNames.NUM_SIX, keyboardNames.NUM_PLUS },
@@ -29,19 +29,55 @@ namespace LoveBoard
             LogitechGSDK.LogiLedRestoreLighting();
         }
 
-        public static void DrawColorGrid(int[,,] Pos, int XOffset)
+        public static void Clear(int R = 255, int G = 255, int B = 255)
+        {
+            LogitechGSDK.LogiLedSetLighting(R, G, B);
+        }
+
+        public static void DrawColorGrid(Color[,] Pos, int XOffset)
         {
             for (int x = 0, y = 0; y < 6;)
             {
-                SetKey(x+XOffset, y, (int[])Pos.GetValue(x, y));
+                SetKey(x+XOffset, y, Pos[y, x]);
                 x++;
-                if (x == Pos.GetLength(0)) { y++; x = 0; }
+                if (x == Pos.GetLength(1)) { y++; x = 0; }
             }
         }
 
-        public static void SetKey(int x, int y, int[] Colors)
+        public static void SetKey(string C, Color Color)
         {
-            LogitechGSDK.LogiLedSetLightingForKeyWithKeyName(KeyGrid[y, x], Colors[0], Colors[1], Colors[2]);
+            keyboardNames k;
+            if (Enum.TryParse(C, out k))
+            {
+                for (int x = 0, y = 0; y < 6;)
+                {
+                    if (KeyGrid[y,x]==k) { SetKey(x, y, Color); return; }
+                    x++;
+                    if (x == 21) { y++; x = 0; }
+                }
+            }
         }
+
+        public static void SetKey(int x, int y, Color Colors)
+        {
+            if (x<21&&y<6&&x>=0&&y>=0) LogitechGSDK.LogiLedSetLightingForKeyWithKeyName(KeyGrid[y, x], Colors.R, Colors.G, Colors.B);
+        }
+    }
+
+    public class Color
+    {
+        public int R, G, B;
+
+        public Color(int R, int G, int B)
+        {
+            this.R = R;
+            this.G = G;
+            this.B = B;
+        }
+
+        public static Color Red = new Color(255, 0, 0);
+        public static Color Green = new Color(0, 255, 0);
+        public static Color Blue = new Color(0, 0, 255);
+        public static Color Black = new Color(0, 0, 0);
     }
 }
