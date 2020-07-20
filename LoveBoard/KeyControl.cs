@@ -19,19 +19,22 @@ namespace LoveBoard
             { keyboardNames.LEFT_SHIFT, (keyboardNames)86, keyboardNames.Z, keyboardNames.X, keyboardNames.C, keyboardNames.V, keyboardNames.B, keyboardNames.N, keyboardNames.M, keyboardNames.COMMA, keyboardNames.PERIOD, keyboardNames.FORWARD_SLASH, keyboardNames.RIGHT_SHIFT, keyboardNames.RIGHT_SHIFT, 00, keyboardNames.ARROW_UP, 00, keyboardNames.NUM_ONE, keyboardNames.NUM_TWO, keyboardNames.NUM_THREE, keyboardNames.NUM_ENTER },
             { keyboardNames.LEFT_CONTROL, keyboardNames.LEFT_WINDOWS, keyboardNames.LEFT_ALT, keyboardNames.SPACE, keyboardNames.SPACE, keyboardNames.SPACE, keyboardNames.SPACE, keyboardNames.SPACE, keyboardNames.SPACE, keyboardNames.SPACE, keyboardNames.RIGHT_ALT, keyboardNames.RIGHT_WINDOWS, keyboardNames.APPLICATION_SELECT, keyboardNames.RIGHT_CONTROL, keyboardNames.ARROW_LEFT, keyboardNames.ARROW_DOWN, keyboardNames.ARROW_RIGHT, keyboardNames.NUM_ZERO, keyboardNames.NUM_ZERO, keyboardNames.NUM_PERIOD, keyboardNames.NUM_ENTER }
         };
+        public static Color BGcolor = Color.Black;
 
-        public static void Start(int R=255, int G=255, int B=255)
+        public static void Start(Color color = null)
         {
             LogitechGSDK.LogiLedInit();
-
             LogitechGSDK.LogiLedSaveCurrentLighting();
-            LogitechGSDK.LogiLedSetLighting(R, G, B);
+
+            if (color != null) BGcolor = color;
+            ResetBG();
+
             LogitechGSDK.LogiLedRestoreLighting();
         }
 
-        public static void Clear(int R = 255, int G = 255, int B = 255)
+        public static void ResetBG()
         {
-            LogitechGSDK.LogiLedSetLighting(R, G, B);
+            LogitechGSDK.LogiLedSetLighting(BGcolor.R, BGcolor.G,BGcolor.B);
         }
 
         public static void DrawColorGrid(Color[,] Pos, int XOffset)
@@ -44,7 +47,20 @@ namespace LoveBoard
             }
         }
 
-        public static void SetKey(string C, Color Color)
+        public static keyboardNames GetKey(string C)
+        {
+            if (C == " ") { C = "SPACE"; }
+
+            keyboardNames k;
+            if (Enum.TryParse(C, out k))
+            {
+                return k;
+            }
+
+            return 00;
+        }
+
+        public static int[] GetKeyPos(string C)
         {
             if (C == " ") { C = "SPACE"; }
 
@@ -53,16 +69,23 @@ namespace LoveBoard
             {
                 for (int x = 0, y = 0; y < 6;)
                 {
-                    if (KeyGrid[y,x]==k) { SetKey(x, y, Color); return; }
+                    if (KeyGrid[y, x] == k) { return new int[] { y,x }; }
                     x++;
                     if (x == 21) { y++; x = 0; }
                 }
             }
+
+            return null;
         }
 
-        public static void SetKey(int x, int y, Color Colors)
+        public static void SetKey(string C, Color Color)
         {
-            if (x<21&&y<6&&x>=0&&y>=0) LogitechGSDK.LogiLedSetLightingForKeyWithKeyName(KeyGrid[y, x], Colors.R, Colors.G, Colors.B);
+            LogitechGSDK.LogiLedSetLightingForKeyWithKeyName(GetKey(C), Color.R, Color.G, Color.B);
+        }
+
+        public static void SetKey(int x, int y, Color Color)
+        {
+            if (x<21&&y<6&&x>=0&&y>=0) LogitechGSDK.LogiLedSetLightingForKeyWithKeyName(KeyGrid[y, x], Color.R, Color.G, Color.B);
         }
     }
 
