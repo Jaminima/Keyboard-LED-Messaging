@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LedCSharp;
 
-namespace LoveBoard
+namespace Keyboard_LED_Messaging
 {
     public static class KeyControl
     {
@@ -30,6 +30,11 @@ namespace LoveBoard
             ResetBG();
 
             LogitechGSDK.LogiLedRestoreLighting();
+        }
+
+        public static void Close()
+        {
+            LogitechGSDK.LogiLedShutdown();
         }
 
         public static void ResetBG()

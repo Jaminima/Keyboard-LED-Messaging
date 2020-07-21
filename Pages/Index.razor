@@ -1,0 +1,41 @@
+﻿@page "/"
+@using System.Threading;
+
+<p>@Response</p>
+
+<input @bind="Msg" />
+
+<button class="btn btn-primary" @onclick="SendMessage">
+    Send Message
+</button>
+
+@code {
+    private string Msg, Response = "";
+
+    private void SendMessage(MouseEventArgs e)
+    {
+        if (!Effects.Locked)
+        {
+            KeyControl.Start();
+            Effects.Locked = true;
+
+            Response = "Showing message";
+
+            new Thread(()=>DoAction()).Start();
+        }
+        else { Response = "Keyboard is busy"; }
+        StateHasChanged();
+    }
+
+    private void DoAction()
+    {
+        Effects.ShowText(Msg);
+
+        KeyControl.Close();
+        Effects.Locked = false;
+
+        Response = "Message has been showed";
+
+        InvokeAsync(StateHasChanged);
+    }
+}

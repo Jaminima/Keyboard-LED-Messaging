@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoveBoard", "LoveBoard\LoveBoard.csproj", "{552CE046-01A1-44CA-8E3D-AF269AB9D40D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keyboard LED Messaging", "Keyboard LED Messaging.csproj", "{39728812-6651-490F-9805-EEE76122DF40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{552CE046-01A1-44CA-8E3D-AF269AB9D40D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{552CE046-01A1-44CA-8E3D-AF269AB9D40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{552CE046-01A1-44CA-8E3D-AF269AB9D40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{552CE046-01A1-44CA-8E3D-AF269AB9D40D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39728812-6651-490F-9805-EEE76122DF40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39728812-6651-490F-9805-EEE76122DF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39728812-6651-490F-9805-EEE76122DF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39728812-6651-490F-9805-EEE76122DF40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {98F6EDE8-6F28-461E-882C-7E9A6E54D469}
+		SolutionGuid = {AD4E83AD-3E28-45F3-A06D-487BE07AF7B4}
 	EndGlobalSection
 EndGlobal

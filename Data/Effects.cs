@@ -5,11 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace LoveBoard
+namespace Keyboard_LED_Messaging
 {
     public static class Effects
     {
+        static Random rnd = new Random();
+
         static Color[] CPalette = { Color.Red, Color.Green, Color.Blue, new Color(255,255,0), new Color(0, 255, 255), new Color(255, 0, 255) };
+
+        public static bool Locked = false;
 
         public static void ColorSplosion(string Key, Color color, int spread=5, int millDelay = 100, Color FadeTo = null)
         {
@@ -57,7 +61,7 @@ namespace LoveBoard
             KeyControl.ResetBG();
             while (repeat>0)
             {
-                KeyControl.SetKey(Program.rnd.Next(0, 21), Program.rnd.Next(0, 6), new Color(Program.rnd.Next(0, 255), Program.rnd.Next(0, 255), Program.rnd.Next(0, 255)));
+                KeyControl.SetKey(rnd.Next(0, 21), rnd.Next(0, 6), new Color(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255)));
                 Thread.Sleep(millDelay);
 
                 repeat--;
@@ -74,7 +78,7 @@ namespace LoveBoard
             {
                 if (Clear) { KeyControl.ResetBG(); Thread.Sleep(100); Clear = false; }
 
-                while (col == prevCol) col = CPalette[Program.rnd.Next(0, CPalette.Length)];
+                while (col == prevCol) col = CPalette[rnd.Next(0, CPalette.Length)];
 
                 if (PrevC!='c') KeyControl.SetKey(PrevC.ToString(), prevCol);
 
